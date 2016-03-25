@@ -20,5 +20,43 @@ struct node {
 };
 
 struct node * insertAtEveryKthNode(struct node *head, int K) {
-	return NULL;
+	//invalid K value check
+	if (K <= 0 || head == NULL)
+		return NULL;
+	struct node *temp = head;
+	int count = 0;
+	//calculating length of the linked list given
+	while (temp != NULL)
+	{
+		temp = temp->next;
+		count++;
+	}
+	//checking for K value greater than length of the linked list
+	if (K > count)
+	{
+		return head;
+	}
+	int res = K + 1;
+	//initialising how many values to be inserted in the list
+	int looprun = count / K;
+	int i;
+	int num1 = K;
+	int t = 0;
+	for (t = 0; t < looprun; t++)
+	{
+		struct node *temp2 = head;
+		//allocating space for new node
+		struct node *temp1 = (struct node *)malloc(sizeof(struct node));
+		temp1->next = NULL;
+		temp1->num = num1;
+		//traversing to n-1th node
+		for (int i = 0; i < K - 1; i++)
+		{
+			temp2 = temp2->next;
+		}
+		temp1->next = temp2->next;
+		temp2->next = temp1;
+		K = K + res;
+	}
+	return head;
 }
